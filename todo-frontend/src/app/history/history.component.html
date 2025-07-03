@@ -1,0 +1,37 @@
+<body>
+  <header class="page-header">
+    <h2>History</h2>
+  </header>
+  <div class="container">
+    <mat-accordion class="todo-accordion" multi>
+      <mat-expansion-panel *ngFor="let item of history">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ item.title }}</mat-panel-title>
+          <mat-panel-description>
+            <button class="icon-btn" (click)="deleteHistoryItem(item._id); $event.stopPropagation()" title="Delete Task">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="todo-details">
+          <p><strong>Due Date:</strong> {{ item.dueDate | date:'mediumDate' }}</p>
+          <p><strong>Completed At:</strong> {{ item.completedAt | date:'medium' }}</p>
+          <p><strong>Important:</strong> {{ item.isImportant ? 'Yes' : 'No' }}</p>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <p class="no-task-message" *ngIf="history.length === 0">
+       No History !
+    </p>
+
+    <div class="fab-container">
+      <button mat-fab class="fab-btn back" routerLink="/todo-list" title="Back">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <button mat-fab class="fab-btn clear" (click)="clearAllHistory()" title="Clear All">
+        <mat-icon>delete_sweep</mat-icon>
+      </button>
+    </div>
+  </div>
+</body>

@@ -1,0 +1,137 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Jost', sans-serif;
+  background: #F5F5F5;
+  color: #333333;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden
+}
+
+.page-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.page-header h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #333333;
+  padding-top: 40px;
+}
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 10px;
+  position: relative;
+}
+
+.todo-accordion {
+  width: 100%;
+}
+
+mat-expansion-panel {
+  background-color: #EBEBEB;
+  margin: 10px 0;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 6px 0;
+  color: #333333;
+}
+
+mat-panel-description {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.todo-details {
+  background-color: #F5F5F5;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #333333;
+}
+
+.todo-details p {
+  margin: 4px 0;
+}
+
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  margin: 0;
+  padding: 0;
+  z-index: 1500;
+  background-color: #C2C2C2;
+  color: #333333;
+}
+
+.icon-btn:hover {
+  background-color: #999999;
+}
+
+.icon-btn mat-icon {
+  font-size: 20px;
+  pointer-events: none;
+}
+
+.fab-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 2000;
+}
+
+.fab-btn {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  background-color: #C2C2C2;
+  color: #333333;
+}
+
+.fab-btn:hover {
+  background-color: #999999;
+}
+
+.fab-btn mat-icon {
+  font-size: 24px;
+}
+
+@media (max-width: 768px) {
+  .todo-details {
+    font-size: 13px;
+  }
+}
+
+
+.no-task-message {
+  text-align: center;
+  font-size: 16px;
+  color: #555;
+  margin-top: 90px;
+  font-style: italic;
+}

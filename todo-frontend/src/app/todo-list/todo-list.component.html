@@ -1,0 +1,89 @@
+<!-- todo-list.component.html -->
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Todo List</h2>
+      <p style="font-size: 10px;">{{ time }}</p>
+    </div>
+
+    <!-- Floating Action Button with Fan-out Menu -->
+    <div class="fab-backdrop" [class.open]="isFabOpen" (click)="toggleFabMenu()"></div>
+    <div class="fab-container">
+      <!-- Main FAB Button -->
+      <button class="fab-main" (click)="toggleFabMenu()" [class.open]="isFabOpen">
+        <mat-icon>{{ isFabOpen ? 'close' : 'more_vert' }}</mat-icon>
+      </button>
+
+      <!-- FAB Menu Items -->
+      <div class="fab-menu" [class.open]="isFabOpen">
+        <!-- Add Todo Button (90°) -->
+        <button class="fab-option fab-add" (click)="openPopup()" title="Add Todo" 
+                [attr.aria-label]="'Add new todo'">
+          <mat-icon>add</mat-icon>
+        </button>
+        
+        <!-- History Button (135°) -->
+        <button class="fab-option fab-history" (click)="navigateToHistory()" title="History"
+                [attr.aria-label]="'View history'">
+          <mat-icon>history</mat-icon>
+        </button>
+        
+        <!-- Logout Button (180°) -->
+        <button class="fab-option fab-logout" (click)="logout()" title="Logout"
+                [attr.aria-label]="'Logout from application'">
+          <mat-icon>logout</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Popup Container -->
+    <div class="popup" *ngIf="showPopup">
+      <div class="popup-content">
+        <form (ngSubmit)="saveTodo()">
+          <h3>{{ isEditing ? 'Edit Todo' : 'Add New Todo' }}</h3>
+          <input type="text" [(ngModel)]="newTodo.title" name="title" placeholder="Title" required />
+          <input type="text" [(ngModel)]="newTodo.description" name="description" placeholder="Description" />
+          <input type="date" [(ngModel)]="newTodo.dueDate" name="dueDate" required />
+          <label>
+            <input type="checkbox" [(ngModel)]="newTodo.isImportant" name="isImportant" /> Important
+          </label>
+          <div class="form-buttons">
+            <button type="submit">{{ isEditing ? 'Update' : 'Add Todo' }}</button>
+            <button type="button" (click)="closePopup()" class="cancel-btn">Cancel</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Todo List -->
+    <mat-accordion class="todo-accordion" multi>
+      <mat-expansion-panel *ngFor="let todo of todos">
+        <mat-expansion-panel-header>
+          <mat-panel-title>{{ todo.title }}</mat-panel-title>
+          <mat-panel-description>
+            <span class="status-label" [ngStyle]="{ color: getDueStatus(todo.dueDate).color }">
+              {{ getDueStatus(todo.dueDate).label }}
+            </span>
+            <mat-icon [ngStyle]="{ color: todo.isImportant ?  'gold' : '#2A2D34' }">
+              {{ todo.isImportant ? 'star' : 'star_border' }}
+            </mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <div class="todo-details">
+          <p class="todo-desc"><strong>Description:</strong> {{ todo.description || '-' }}</p>
+          <p class="todo-date"><strong>Due:</strong> {{ todo.dueDate | date:'mediumDate' }}</p>
+          <div class="panel-buttons">
+            <button (click)="markAsCompleted(todo._id)" [disabled]="todo.completed"><mat-icon>done_outline</mat-icon></button>
+            <button (click)="UpdateTodo(todo._id)"><mat-icon>edit</mat-icon></button>
+            <button (click)="deleteTodo(todo._id)"><mat-icon>delete</mat-icon></button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <!-- Message for empty task list -->
+    <p class="no-task-message" *ngIf="todos.length === 0">
+      🎉 No tasks yet. Add something to do!
+    </p>
+  </div>
+</body>

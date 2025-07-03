@@ -1,0 +1,27 @@
+<body>
+	<div class="main">  	
+		<input type="checkbox" id="chk" aria-hidden="true">
+      <div class="login">
+        <form (ngSubmit)="onSubmit()">
+          <label for="chk" aria-hidden="true">Login</label>
+          <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+          <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+          <button>Login</button>
+          <p class="error-message" *ngIf="loginErrorMessage">{{ loginErrorMessage }}</p>
+        </form>
+      </div>
+			<div class="signup">
+				<form (ngSubmit)="signup()">
+					<label for="chk" aria-hidden="true" style="padding-top:20px ;">Signup</label>
+					<input type="text" placeholder="Username" [(ngModel)]="username" name="username" required />
+          <input type="email" placeholder="Email" [(ngModel)]="email" name="email" required />
+          <input type="password" placeholder="Password" [(ngModel)]="password" name="password" required />
+					<button type="submit">Sign up</button>
+          <p class="error-message" *ngIf="signupErrorMessage">{{ signupErrorMessage }}</p>
+				</form>
+			</div>
+	</div>
+</body>
+
+
+
