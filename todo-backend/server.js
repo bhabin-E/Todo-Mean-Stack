@@ -9,7 +9,13 @@ const historyRoutes = require('./routes/historyRoutes');
 
 
 const app = express();
-app.use(cors());
+const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:4200';
+
+app.use(cors({
+  origin: allowedOrigin,
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+}));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
