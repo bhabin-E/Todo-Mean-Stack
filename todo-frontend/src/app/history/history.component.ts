@@ -13,7 +13,7 @@ import { environment } from '../../environments/environment';
 })
 export class HistoryComponent implements OnInit {
   history: any[] = [];
-
+  isLoading: boolean = false;
   // Fetch completed todos from history
   async ngOnInit() {
     this.getHistory();
@@ -29,6 +29,7 @@ export class HistoryComponent implements OnInit {
 
   // Get history of completed tasks from the backend
   async getHistory() {
+    this.isLoading = true;
     try {
       const response = await axios.get(`${environment.apiUrl}/api/history`, {
         headers: this.getAuthHeaders()
@@ -36,6 +37,8 @@ export class HistoryComponent implements OnInit {
       this.history = response.data;
     } catch (err) {
       console.error(err);
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -48,6 +51,8 @@ export class HistoryComponent implements OnInit {
     });
 
     if (!confirmed) return;
+
+    this.isLoading = true;
     try {
       await axios.delete(`${environment.apiUrl}/api/history/${id}`, {
         headers: this.getAuthHeaders()
@@ -55,6 +60,8 @@ export class HistoryComponent implements OnInit {
       this.history = this.history.filter(item => item._id !== id); // Remove from local list
     } catch (err) {
       console.error(err);
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -67,6 +74,7 @@ export class HistoryComponent implements OnInit {
     });
 
     if (!confirmed) return;
+    this.isLoading = true;
     try {
       await axios.delete(`${environment.apiUrl}/api/history`, {
         headers: this.getAuthHeaders()
@@ -74,6 +82,8 @@ export class HistoryComponent implements OnInit {
       this.history = []; // Clear local list
     } catch (err) {
       console.error(err);
+    } finally {
+      this.isLoading = false;
     }
   }
 

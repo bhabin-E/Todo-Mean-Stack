@@ -14,7 +14,7 @@ const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:4200';
 app.use(cors({
   origin: allowedOrigin,
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS']
 }));
 app.use(express.json());
 

@@ -14,6 +14,7 @@ import { environment } from '../../environments/environment';
 })
 export class TodoListComponent implements OnInit, OnDestroy {
   todos: any[] = [];
+  isLoading: boolean = false;
   newTodo = {
     title: '',
     description: '',
@@ -58,6 +59,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
   }
 
   async getTodos() {
+    this.isLoading = true;
     try {
       const response = await axios.get(`${environment.apiUrl}/api/todos`, {
         headers: this.getAuthHeaders()
@@ -65,9 +67,11 @@ export class TodoListComponent implements OnInit, OnDestroy {
       this.todos = response.data;
     } catch (err) {
       console.error(err);
+    }finally {
+      this.isLoading = false;
     }
   }
-
+  
   async markAsCompleted(id: string) {
     const confirmed = await this.openConfirmDialog({
       title: 'Task Completed',
@@ -76,6 +80,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
     });
     if (!confirmed) return;
 
+    this.isLoading = true;
     try {
       await axios.patch(`${environment.apiUrl}/api/todos/${id}/complete`, {}, {
         headers: this.getAuthHeaders()
@@ -83,6 +88,8 @@ export class TodoListComponent implements OnInit, OnDestroy {
       this.getTodos();
     } catch (err) {
       console.error(err);
+    }finally {
+      this.isLoading = false;
     }
   }
 
@@ -94,6 +101,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
     });
     if (!confirmed) return;
 
+    this.isLoading = true;
     try {
       await axios.delete(`${environment.apiUrl}/api/todos/${id}`, {
         headers: this.getAuthHeaders()
@@ -101,6 +109,8 @@ export class TodoListComponent implements OnInit, OnDestroy {
       this.getTodos();
     } catch (err) {
       console.error(err);
+    }finally {
+      this.isLoading = false;
     }
   }
 
@@ -117,6 +127,7 @@ export class TodoListComponent implements OnInit, OnDestroy {
   }
 
   async saveTodo() {
+    this.isLoading = true;
     try {
       if (this.isEditing && this.editTodoId) {
         await axios.put(`http://localhost:5000/api/todos/${this.editTodoId}`, this.newTodo, {
@@ -131,10 +142,13 @@ export class TodoListComponent implements OnInit, OnDestroy {
       this.closePopup();
     } catch (err) {
       console.error(err);
+    }finally {
+      this.isLoading = false;
     }
   }
 
   async UpdateTodo(todoId: string) {
+    this.isLoading = true;
     try {
       const todoToEdit = this.todos.find(todo => todo._id === todoId);
       if (todoToEdit) {
@@ -150,6 +164,8 @@ export class TodoListComponent implements OnInit, OnDestroy {
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      this.isLoading = false;
     }
   }
 

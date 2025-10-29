@@ -1,5 +1,37 @@
 <!-- todo-list.component.html -->
+
 <body>
+  <!-- Loader Overlay -->
+  <div *ngIf="isLoading" class="fixed inset-0 bg-black/10 backdrop-blur-sm flex items-center justify-center z-50">
+    <div class="flex flex-col items-center space-y-4 p-5 rounded-xl bg-black/20">
+      <div class="flex space-x-1">
+        <div class="w-2 h-2 bg-white rounded-full animate-wave" style="animation-delay: 0.1s"></div>
+        <div class="w-2 h-2 bg-white rounded-full animate-wave" style="animation-delay: 0.2s"></div>
+        <div class="w-2 h-2 bg-white rounded-full animate-wave" style="animation-delay: 0.3s"></div>
+      </div>
+      <p class="text-white text-xs font-light">Loading</p>
+    </div>
+  </div>
+
+  <style>
+    .animate-wave {
+      animation: wave 1.5s ease-in-out infinite;
+    }
+
+    @keyframes wave {
+
+      0%,
+      60%,
+      100% {
+        transform: translateY(0);
+      }
+
+      30% {
+        transform: translateY(-10px);
+      }
+    }
+  </style>
+
   <div class="container">
     <div class="header">
       <h2>Todo List</h2>
@@ -17,20 +49,19 @@
       <!-- FAB Menu Items -->
       <div class="fab-menu" [class.open]="isFabOpen">
         <!-- Add Todo Button (90°) -->
-        <button class="fab-option fab-add" (click)="openPopup()" title="Add Todo" 
-                [attr.aria-label]="'Add new todo'">
+        <button class="fab-option fab-add" (click)="openPopup()" title="Add Todo" [attr.aria-label]="'Add new todo'">
           <mat-icon>add</mat-icon>
         </button>
-        
+
         <!-- History Button (135°) -->
         <button class="fab-option fab-history" (click)="navigateToHistory()" title="History"
-                [attr.aria-label]="'View history'">
+          [attr.aria-label]="'View history'">
           <mat-icon>history</mat-icon>
         </button>
-        
+
         <!-- Logout Button (180°) -->
         <button class="fab-option fab-logout" (click)="logout()" title="Logout"
-                [attr.aria-label]="'Logout from application'">
+          [attr.aria-label]="'Logout from application'">
           <mat-icon>logout</mat-icon>
         </button>
       </div>
@@ -74,7 +105,8 @@
           <p class="todo-desc"><strong>Description:</strong> {{ todo.description || '-' }}</p>
           <p class="todo-date"><strong>Due:</strong> {{ todo.dueDate | date:'mediumDate' }}</p>
           <div class="panel-buttons">
-            <button (click)="markAsCompleted(todo._id)" [disabled]="todo.completed"><mat-icon>done_outline</mat-icon></button>
+            <button (click)="markAsCompleted(todo._id)"
+              [disabled]="todo.completed"><mat-icon>done_outline</mat-icon></button>
             <button (click)="UpdateTodo(todo._id)"><mat-icon>edit</mat-icon></button>
             <button (click)="deleteTodo(todo._id)"><mat-icon>delete</mat-icon></button>
           </div>
